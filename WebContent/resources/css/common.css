@@ -1,0 +1,37 @@
+@CHARSET "UTF-8";
+table{border-collapse: collapse;}
+footer{width:100%; height: 50px; padding: 10px;}
+footer div{width:80%;float:right;}
+#wrapper{width:100%;height: 100%;}
+#title{text-align:center;}
+#go_main{float:right;}
+#container{margin: 0 auto;width:120%;height:5%;}
+.gms-text-center{text-align: center;}
+.gms-border-black{border:1px solid black;}
+.gms-width-30pro{width:30%;}
+.gms-text-deco-none{text-decoration: none;}
+.gms-marjin-auto{margin: 0 auto;}
+.gms-list-none{list-style-type:none;}
+.gms-image{margin: 0 auto;width: 350px;}
+/*배경색*/
+.gms-bgcolor-blue{background-color:blue;}
+.gms-bgcolor-red{background-color:red;}
+.gms-bgcolor-white{background-color:white;}
+.gms-textcolor-blue{color:blue;}
+.gms-textcolor-white{color:white;}
+.gms-font-size30{font-size:30px;}
+.gms-display-inline-block{display: inline-block;}
+.gms-width-100{width:100px;}
+.gms-width-300{width:300px;}
+.gms-width-100p{width:100%;}
+.gms-width-200{width:200px;}
+.gms-float-ringt{float:right}
+.gms-font-size30px{font-size: 30px;}
+/* unvisited link */
+a:link {color: black;}
+/* visited link */
+a:visited {color: green;}
+/* mouse over link */
+a:hover {color: hotpink;font-size:30px}
+/* selected link */
+a:active {color: blue;}
