@@ -1,11 +1,15 @@
 package com.gms.web.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.gms.web.command.Command;
 import com.gms.web.dao.MemberDAO;
 import com.gms.web.daoImpl.MemberDAOIml;
+import com.gms.web.domain.MajorBean;
 import com.gms.web.domain.MemberBean;
+
 import com.gms.web.service.MemberService;
 
 public class MemberServiceImpl implements MemberService{
@@ -18,32 +22,38 @@ public class MemberServiceImpl implements MemberService{
 	private MemberServiceImpl() { // 2번 생성자 만들고
 		
 	}
-	@Override
-	public String addMember(MemberBean bean) {
-		return MemberDAOIml.getInstance().insert(bean).equals("1")?"가입성공":"실패";
+	@SuppressWarnings("unchecked")
+	public String addMember(Map<String ,Object> map) {
+		System.out.println("member 서비스진입");
+		MemberBean m=(MemberBean) map.get("member");
+		System.out.println("넘어온회원이름"+m.toString());
+		List<MajorBean>list=(List<MajorBean>) map.get("major");
+		System.out.println("수강과목"+list);
+		
+		
+		return MemberDAOIml.getInstance().insert(map);
 	}
 	List<MemberBean> list;// 1순위 큰놈\
 	// 4번째 (인스턴스변수)
 	Map<String,MemberBean> map;
 	MemberBean member;
 	MemberDAO dao;
-	@Override
-	public List<MemberBean> list() {
-		return MemberDAOIml.getInstance().selectAll();
+	public List<?> list(Command cmd) {
+		return MemberDAOIml.getInstance().selectAll(cmd);// 쉘로우카피에의한 객체  , 주소값에의한 객체 너무빠르다
 	}
 	@Override
-	public List<MemberBean> findByName(String name) {
-	return MemberDAOIml.getInstance().selectByName(name);
+	public List<?> findByName(Command cmd) {
+	return MemberDAOIml.getInstance().selectByName(cmd);
 	}
 	@Override
-	public MemberBean findById(String id) {
+	public MemberBean findById(Command cmd) {
 		
 
-		return MemberDAOIml.getInstance().selectById(id);
+		return MemberDAOIml.getInstance().selectById(cmd);
 	}
 	@Override
-	public String count() {
-		return String.valueOf(MemberDAOIml.getInstance().count());
+	public String count(Command cmd) {
+		return String.valueOf(MemberDAOIml.getInstance().allcount(cmd));
 	}
 	@Override
 	public String modify(MemberBean bean) {
@@ -57,13 +67,29 @@ public class MemberServiceImpl implements MemberService{
 	return MemberDAOIml.getInstance().update(bean);
 	}
 	@Override
-	public String remove(String id) {
+	public String remove(Command cmd) {
 		
 			String msg = "";
-			String rs = MemberDAOIml.getInstance().delete(id);
+			String rs = MemberDAOIml.getInstance().delete(cmd);
 			msg = (Integer.parseInt(rs)==1)?msg="삭제 성공":"삭제 실패";
 			return msg;
 		}
+
+
+	@Override
+	public Map<String,Object> login(MemberBean bean) {
+		/*MemberBean m=MemberDAOIml.getInstance().selectById(bean.getId());*/
+		Map<String,Object> map=new HashMap<>();
+		Command cmd=new Command();
+		cmd.setSearchWord(bean.getId());
+		MemberBean m=findById(cmd);
+		String  page= (m!=null)?(bean.getPassword().equals(m.getPassword()))?"main":"login_fail":"join";
+		
+		map.put("page",page);
+		map.put("user",m);
+		return map;
+	
+	}
 
 	
 }

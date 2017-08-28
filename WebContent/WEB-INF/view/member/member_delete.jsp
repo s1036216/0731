@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file = "member_head.jsp" %>
+<jsp:include page="../common/common_head.jsp"/>
          <header>
          <h1 class="gms-h1">Member Detail</h1>
          </header>
@@ -47,7 +47,7 @@
             location.href="<%=request.getContextPath()%>/member/member_update.jsp?id=";
          }
          </script>
-         <%@ include file = "../common/footer.jsp" %>
+<jsp:include page="../common/footer.jsp"/>
 
 
    

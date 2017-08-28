@@ -7,7 +7,7 @@
 	// 호출하는거 예를들어닥터스트레인지 유체이탈
 	Connection conn = DriverManager.getConnection(DB.ORACLE_URL, DB.USERNAME, DB.PASSWORD);
 	Statement stmt = conn.createStatement();// create 는 없던것을 만드는 펙토리 패턴
-	String sql = "SELECT * FROM Member WHERE id='cho'"; //where if문 아이디가 cho
+	String sql = "SELECT * FROM Member WHERE member_id='cho'"; //where if문 아이디가 cho
 	ResultSet rs = stmt.executeQuery(sql);// execute는 실행해라 sql문을
 	String findName="";
 	if (rs.next()) {

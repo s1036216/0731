@@ -52,11 +52,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 			ArticleBean bean=null; //아파트대지땅구입
 		while(rs.next()){ //rs.next 무조건
 			bean=new ArticleBean(); //건물올림 살사람들 들어오게
-			bean.setArtcilsSeq(rs.getInt("article_seq"));
+			bean.setArticleSeq(rs.getInt("article_seq"));
 			bean.setId(rs.getString("id")); //입주
 			bean.setTitle(rs.getString("title"));
 			bean.setContent(rs.getString("content"));
-			bean.setHitcounht(rs.getInt("hitcount"));
+			bean.setHitcount(rs.getInt("hitcount"));
 			bean.setRegdate(rs.getString("regdate"));
 			list.add(bean); //분양완료
 		
@@ -82,11 +82,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 			ResultSet rs=stmt.executeQuery();
 					while(rs.next()){
 					bean=new ArticleBean(); //건물올림 살사람들 들어오게
-					bean.setArtcilsSeq(rs.getInt(DB.TABLE_SEQ));
+					bean.setArticleSeq(rs.getInt(DB.TABLE_SEQ));
 					bean.setId(rs.getString(DB.TABLE_ID)); //입주
 					bean.setTitle(rs.getString(DB.TABLE_TITLE));
 					bean.setContent(rs.getString(DB.TABLE_CONTENT));
-					bean.setHitcounht(rs.getInt(DB.TABLE_HITCOUNT));
+					bean.setHitcount(rs.getInt(DB.TABLE_HITCOUNT));
 					bean.setRegdate(rs.getString(DB.TABLE_REGDATE));
 					list.add(bean); //분양완료
 					System.out.println(list);	
@@ -111,11 +111,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 			ResultSet rs=stmt.executeQuery();
 			if(rs.next()){
 				bean=new ArticleBean();
-				bean.setArtcilsSeq(rs.getInt(DB.TABLE_SEQ));
+				bean.setArticleSeq(rs.getInt(DB.TABLE_SEQ));
 				bean.setId(rs.getString(DB.TABLE_ID)); //입주
 				bean.setTitle(rs.getString(DB.TABLE_TITLE));
 				bean.setContent(rs.getString(DB.TABLE_CONTENT));
-				bean.setHitcounht(rs.getInt(DB.TABLE_HITCOUNT));
+				bean.setHitcount(rs.getInt(DB.TABLE_HITCOUNT));
 				bean.setRegdate(rs.getString(DB.TABLE_REGDATE));
 					
 			}
@@ -146,7 +146,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}	@Override
 	public String modify(ArticleBean bean) {
 		String result="";
-		ArticleBean temp=findSeq(bean.getArtcilsSeq());
+		ArticleBean temp=findSeq(bean.getArticleSeq());
 		String title=(bean.getTitle().equals(""))?temp.getTitle():bean.getTitle();
 		String content=(bean.getContent().equals(""))?temp.getContent():bean.getContent();
 		try {
@@ -154,7 +154,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 				.geConnection().prepareStatement(SQL.BOARD_UPDATE);
 		pstmt.setString(1,title);
 		pstmt.setString(2,content);
-		pstmt.setInt(3,bean.getArtcilsSeq());
+		pstmt.setInt(3,bean.getArticleSeq());
 		result=String.valueOf(pstmt.executeUpdate());		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

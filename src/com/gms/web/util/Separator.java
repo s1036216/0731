@@ -2,12 +2,21 @@ package com.gms.web.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.gms.web.command.Command;
+import com.gms.web.factory.CommandFactory;
+
 public class Separator {
-	public static String init(HttpServletRequest request){
+	public static Command cmd=new Command(); //스태틱 cmd
+	public static void init(HttpServletRequest request){
 		String servletPath=request.getServletPath();
+		cmd=CommandFactory.createCommand(
+				servletPath.substring(1,servletPath.indexOf(".")),
+				request.getParameter("action"),
+				request.getParameter("page"),
+				request.getParameter("pageNumber"),
+				request.getParameter("column"),
+				request.getParameter("search"));
+		System.out.println("servletPath:"+servletPath);
 	
-		String directory=servletPath.substring(1,7);
-		System.out.println(directory);
-		return directory;
 	}
 }
