@@ -350,3 +350,6 @@ from(select rownum seq,t.*
     select t2.* from(select rownum seq,t.* from (select * from student where name like '%이%' order by num desc) t)t2 where t2.seq between 1 and 5;
     
      select t2.* from(select rownum seq,t.* from (select * from student where name like '%이%' order by num desc) t)t2 where t2.seq between 1 and 5;
+     
+     select count(*) from STUDENT where name like '%%';
+     

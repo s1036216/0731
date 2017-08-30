@@ -40,7 +40,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li style="font-weight:bold;color: white ">${sessionScope.user.name}</li>
       <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      <li><a id="logout" onclick="logout('common','index')"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
+      <li><a id="logout" onclick="logout('common','home')"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
     </ul>
   </div>
 </nav>
@@ -50,6 +50,7 @@ function logout(directory,page) {
    location.href="${ctx}/"+directory+".do?action=logout&page="+page;
 }
 function moveTo(directory,page) {
+	alert('무브투');
    location.href="${ctx}/"+directory+".do?action=move&page="+page;
 }
 function deleteTarget(){
@@ -59,6 +60,10 @@ function list(directory,page,pageNumber) {
 	location.href="${ctx}/"+directory+".do?action=list&page="+page+"&pageNumber="+pageNumber;
 }
 function mainLoad() {
+/* 	var main_ul=[];
+	var u1=$("#main_ul_stud");
+	var u2=$("#main_ul_grade");
+	var u3=$("#main_ul_board"); */
    var u1=document.getElementById("main_ul_stud");
    var u2=document.getElementById("main_ul_grade");
    var u3=document.getElementById("main_ul_board");
@@ -121,7 +126,57 @@ function navbarLoad() {
    u3c[4].setAttribute("onclick", "deleteTarget('게시판')");
   
    var logout=doucument.getElementById("logout");
-   logout.setAttribute("onclick","'logout'('common','index')");
+   logout.setAttribute("onclick","'logout'('common','home')");
 }
 
+function search(){
+	
+	var search=document.getElementById("search").value;
+	if(search===""){
+		alert('검색어 입력');
+		return ;
+	}
+	alert('입력'+search);
+	location.href="${ctx}/member.do?action=search&page=member_list&search="+search;
+
+}
+
+
+	function updateStudent(id){
+		alert('수정할 id'+id);
+		location.href="${ctx}/member.do?action=update&page=member_update&id="+id;
+	}
+	function deleteStudent(id){
+		alert('삭제할 id'+id);
+		location.href="${ctx}/member.do?action=delete&page=member_list&id="+id;
+	}
+	function detailStudent(id){
+		alert('삭제할 id'+id);
+		location.href="${ctx}/member.do?action=detail&page=member_detail&id="+id;
+	}
+	
+	function studentInfo(){
+  	  var id='id',
+  	      id_val='${requestScope.student.id}',
+  	      name='name',
+  	      name_val='${requestScope.student.name}',
+  	      email='email',
+  	      email_val='${requestScope.student.email}'
+  	      ;
+  	  sessionStorage.setItem(id,id_val);    
+  	  sessionStorage.setItem(name,name_val);    
+  	  sessionStorage.setItem(email,email_val);    
+    }
+    function testss() {
+  	  alert('ㅇㅇ');
+    }
+    window.addEventListener('load',test,false);
+    
+    function memberAdd(){
+    	var form=document.getElementById("join_form");  //타입은 input
+    	form.setAttribute=('action','${ctx}/common.do');
+    	form.setAttribute=('metehod','post');
+    	return true;
+    }
+    		
 </script>

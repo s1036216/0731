@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
-
 public class ParamsIterator {
 	public static Map<String,String> execute(HttpServletRequest request){
 		Map<String,String> result=new HashMap<>();

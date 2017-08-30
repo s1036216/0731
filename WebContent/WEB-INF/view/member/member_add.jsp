@@ -41,17 +41,5 @@
 <input type="hidden" name="page" value="main" />
  </fieldset>
 </form>
-
-
-<script>
-function memberAdd(){
-	var form=document.getElementById("join_form");  //타입은 input
-	form.setAttribute=('action','${ctx}/common.do');
-	form.setAttribute=('metehod','post');
-	return true;
-}
-		
-</script>
-
 </div>
 <jsp:include page="../common/footer.jsp"/>

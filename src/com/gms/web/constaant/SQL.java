@@ -32,7 +32,10 @@ public class SQL {
 				+" from(select rownum rnum,s.* "
 				+" from student s)t "
 			    +" where t.rnum between ? and ? ";
-	
-	
+	public static final String STUDENT_COUNTT=String.format("SELECT COUNT(*) as count FROM %s where name like ?",DB.TABLE_STUDENT,"name");
+	public static final String STUDENT_FINDNAME=String.format("SELECT * FROM STUDENT WHERE %s like ?" ,"name");
 	//	public static final String BOARD_INSERT=String.format("INSERT INTO %s(%s,%s,%s,%s,%s,%s) VALUES(article_seq.nextval,?,?,?,0,SYSDATE);
+	
+	public static final String STUDENT_FINDBYID=String.format("select * from %s where id like ?","student");
+	
 }	

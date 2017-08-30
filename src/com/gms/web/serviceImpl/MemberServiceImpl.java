@@ -9,7 +9,7 @@ import com.gms.web.dao.MemberDAO;
 import com.gms.web.daoImpl.MemberDAOIml;
 import com.gms.web.domain.MajorBean;
 import com.gms.web.domain.MemberBean;
-
+import com.gms.web.domain.StudentBean;
 import com.gms.web.service.MemberService;
 
 public class MemberServiceImpl implements MemberService{
@@ -43,12 +43,14 @@ public class MemberServiceImpl implements MemberService{
 	}
 	@Override
 	public List<?> findByName(Command cmd) {
-	return MemberDAOIml.getInstance().selectByName(cmd);
+		System.out.println("찾을이름("+cmd.getSearchWord()+")");
+		
+		return MemberDAOIml.getInstance().selectByName(cmd);
 	}
 	@Override
-	public MemberBean findById(Command cmd) {
+	public StudentBean findById(Command cmd) {
 		
-
+			
 		return MemberDAOIml.getInstance().selectById(cmd);
 	}
 	@Override
@@ -82,7 +84,7 @@ public class MemberServiceImpl implements MemberService{
 		Map<String,Object> map=new HashMap<>();
 		Command cmd=new Command();
 		cmd.setSearchWord(bean.getId());
-		MemberBean m=findById(cmd);
+		MemberBean m=MemberDAOIml.getInstance().login(cmd);
 		String  page= (m!=null)?(bean.getPassword().equals(m.getPassword()))?"main":"login_fail":"join";
 		
 		map.put("page",page);

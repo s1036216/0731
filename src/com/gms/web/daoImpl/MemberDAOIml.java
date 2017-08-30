@@ -110,23 +110,29 @@ public class MemberDAOIml implements MemberDAO {
 	}
 
 	@Override
-	public List<MemberBean> selectByName(Command cmd) {
-		List<MemberBean> temp = new ArrayList<>();
+	public List<StudentBean> selectByName(Command cmd) {
+		System.out.println("찾을 이름"+cmd.getSearchWord());
+		System.out.println("찾을 컬럼"+cmd.getColumn());
+		
+		List<StudentBean> temp = new ArrayList<>();
 		try {
 			PreparedStatement pstmt = DatabaseFactory.createDatabase(Vendor.ORACLE, DB.USERNAME, DB.PASSWORD)
 					.geConnection()// 너무빠르다 담자마자 결국 객체가된다 호출하자마자
-					.prepareStatement(SQL.MEMBER_FINDBYNAME);
-			pstmt.setString(1, cmd.getSearchWord());
+					.prepareStatement(SQL.STUDENT_FINDNAME);
+			pstmt.setString(1, "%"+cmd.getSearchWord()+"%");
 			ResultSet rs = pstmt.executeQuery();
-			MemberBean member = null; // 아파트대지땅구입
+			StudentBean member = null; // 아파트대지땅구입
 			while (rs.next()) { // rs.next 무조건
-				member = new MemberBean(); // 건물올림 살사람들 들어오게
-				member.setId(rs.getString(DB.MEMBER_ID)); // 입주
+				member = new StudentBean(); // 건물올림 살사람들 들어오게
+				member.setId(rs.getString(DB.ID)); // 입주
 				member.setName(rs.getString(DB.MEMBER_NAME));
-				member.setPassword(rs.getString(DB.MEMBER_PASS));
 				member.setSsn(rs.getString(DB.MEMBER_SSN));
+				member.setEmail(rs.getString(DB.EMAIL));
+				member.setPhone(rs.getString(DB.PHONE));
+				member.setTitle(rs.getString(DB.TITLE));
+				member.setNum(rs.getString(DB.NUM));
 				member.setRegdate(rs.getString(DB.MEMBER_REGDATE));
-				temp.add(member); // 분양완료
+				temp.add(member); // 분양완료 분양완료
 			}
 
 		} catch (Exception e) {
@@ -138,23 +144,26 @@ public class MemberDAOIml implements MemberDAO {
 	}
 
 	@Override
-	public MemberBean selectById(Command cmd) {
+	public StudentBean selectById(Command cmd) {
 		// TODO Auto-generated method stub
-		MemberBean member = null;
+		StudentBean member = null;
 		try {
 			PreparedStatement pstmt = DatabaseFactory.createDatabase(Vendor.ORACLE, DB.USERNAME, DB.PASSWORD)
 					.geConnection()// 너무빠르다 담자마자 결국 객체가된다 호출하자마자
-					.prepareStatement(SQL.MEMBER_FINDBYID);
+					.prepareStatement(SQL.STUDENT_FINDBYID);
 			pstmt.setString(1, cmd.getSearchWord());
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				member = new MemberBean();
-				member.setId(rs.getString(DB.MEMBER_ID));
+				member = new StudentBean(); // 건물올림 살사람들 들어오게
+				member.setId(rs.getString(DB.ID)); // 입주
 				member.setName(rs.getString(DB.MEMBER_NAME));
-				member.setPassword(rs.getString(DB.MEMBER_PASS));
 				member.setSsn(rs.getString(DB.MEMBER_SSN));
+				member.setEmail(rs.getString(DB.EMAIL));
+				member.setPhone(rs.getString(DB.PHONE));
+				member.setTitle(rs.getString(DB.TITLE));
+				member.setNum(rs.getString(DB.NUM));
 				member.setRegdate(rs.getString(DB.MEMBER_REGDATE));
-			}
+	      	}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,24 +173,34 @@ public class MemberDAOIml implements MemberDAO {
 
 	@Override
 	public String allcount(Command cmd) {
-		int count = 0;
-		try {
-			PreparedStatement pstmt = DatabaseFactory.createDatabase(Vendor.ORACLE, DB.USERNAME, DB.PASSWORD)
-					.geConnection().prepareStatement(SQL.STUDENT_COUNT);
-
-			ResultSet rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				count = Integer.parseInt(rs.getString("count"));
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return String.valueOf(count);
-	}
-
+	      System.out.println("count 진입"+cmd.getSearchWord());
+	      System.out.println("count 진입"+cmd.getColumn());
+	      String count = "";
+	      PreparedStatement pstmt=null;
+	      ResultSet rs =null;
+	       String sql="";
+	       String search=cmd.getSearchWord();
+	       sql=(search==null)?"%":"%"+search;
+	      try {
+	         conn=DatabaseFactory.createDatabase(Vendor.ORACLE, DB.USERNAME, DB.PASSWORD).geConnection();
+	         if(cmd.getSearchWord()==null){
+	            System.out.println("cmd.getSearch() is null");
+	            pstmt=conn.prepareStatement(SQL.STUDENT_COUNTT);
+	            pstmt.setString(1, "%");
+	         }else{
+	            System.out.println("cmd.getSearch() is not null");
+	            pstmt=conn.prepareStatement(SQL.STUDENT_COUNTT);
+	            pstmt.setString(1, "%"+cmd.getSearchWord()+"%");
+	         }
+	         rs = pstmt.executeQuery();
+	         if (rs.next()) {
+	            count = rs.getString("count");
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return count;
+	   }
 	@Override
 	public String update(MemberBean bean) {
 
@@ -220,4 +239,23 @@ public class MemberDAOIml implements MemberDAO {
 		return rs;
 	}
 
+	   @Override
+	   public MemberBean login(Command cmd) {
+	      MemberBean member=null;
+	      System.out.println("$ ID"+cmd.getSearchWord());
+	      try {
+	         PreparedStatement pstmt=DatabaseFactory.createDatabase(Vendor.ORACLE, DB.USERNAME,DB.PASSWORD).geConnection().prepareStatement("select * from member where member_id like ?");
+	         pstmt.setString(1, cmd.getSearchWord());
+	         ResultSet rs=pstmt.executeQuery();
+	         if(rs.next()){
+	            member=new MemberBean();
+	            member.setId(rs.getString(DB.MEMBER_ID));
+	            member.setName(rs.getString(DB.MEMBER_NAME));
+	            member.setPassword(rs.getString(DB.MEMBER_PASS));
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return member;
+	   }
 }

@@ -12,8 +12,10 @@ public class BlockHandler {
       result[1]=theNumberOfPages;
       result[2]=startPage;
       result[3]=endPage;
-      result[4]=startPage-((theNumberOfPages/pxy.getBlockSize()));//prevBlock;
-      result[5]=startPage+((theNumberOfPages/pxy.getBlockSize()));//nextBlock;
+      result[4]=(startPage-(theNumberOfPages/pxy.getBlockSize())>0)
+              ?1:0; //prevBlock;
+          result[5]=theNumberOfPages-startPage+(theNumberOfPages/pxy.getBlockSize()); 
+
      System.out.println(
     		 		 "pageNumber is "+result[0]+",\n"+
     				 "theNumberOfPages is "+result[1]+",\n"+

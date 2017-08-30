@@ -34,11 +34,14 @@ public class Command implements Commandable{  //Commandable 서비스임플처�
 	}
 
 	public void setColumn(String column) {
-		this.column = column;
+		this.column  =(column==null)?
+				"none":column;
+				System.out.println("컬럼"+this.column);
 	}
 
 	public void setPageNumber(String pageNumber) {
-		this.pageNumber = (pageNumber==null)?"1":pageNumber;
+		this.pageNumber = 
+				(pageNumber==null)?"1":pageNumber;
 		System.out.println("페이지번호"+pageNumber);
 			
 	}
@@ -48,7 +51,9 @@ public class Command implements Commandable{  //Commandable 서비스임플처�
 	}
 
 	public void setSearchWord(String searchWord) {
-		this.searchWord = searchWord;
+		this.searchWord = (searchWord==null)?
+				"none":searchWord;
+				System.out.println("검색어"+this.searchWord);
 	}
 
 	public String getDirectory() {
@@ -65,7 +70,7 @@ public class Command implements Commandable{  //Commandable 서비스임플처�
 	}
 
 	public void setAction(String action) {
-		this.action  =(action.equals(""))?
+		this.action  =(action==null)?
 				"move":action;
 				System.out.println("엑션"+action);
 				
